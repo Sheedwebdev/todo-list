@@ -59,7 +59,7 @@ import styled, { keyframes } from 'styled-components';
     }
     to {
       opacity: 0.4;
-      transform: translateX(16px);
+      transform: translateX(45px);
     }
   `
 
