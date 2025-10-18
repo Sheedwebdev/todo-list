@@ -1,18 +1,20 @@
 import React  from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
   function TodoList() {
-    const [tasks, setTasks] = React.useState([
-      {text: "Build a react application", done: false},
-      {text: "Go grocery shopping", done: false},
-      {text: "Go to my doctor's appointment", done: false}
-    ])
+    const [tasks, setTasks] = React.useState([]);
+    const [newTask, setNewTask] = React.useState("");
     const id = React.useId();
 
+    const addTask = (e) => {
+      e.preventDefault();
+      if (!newTask.trim()) return;
+      setTasks([...tasks, {text: newTask, done: false}]);
+      setNewTask("");
+    }
+
     return (
-     <Form onSubmit={(e) => {
-       e.preventDefault();
-     }}>
+     <Form onSubmit={addTask}> 
       <Fieldset>
         <Legend>To Do List</Legend>
         {tasks.map((task, index) => (
@@ -28,15 +30,55 @@ import styled from 'styled-components';
                 setTasks(updatedTasks);
               }}
             />
-            <Label htmlFor={`${id}-${index}`}>
+            <Label htmlFor={`${id}-${index}`} done={task.done}>
               {task.text}
             </Label>
           </Container>
         ))}
       </Fieldset>
+
+      <TextInput>
+        <input 
+          type='text'
+          placeholder='Add a new task'
+          value={newTask}
+          onChange={(e) => (
+            setNewTask(e.target.value)
+          )}
+        />
+        <SubmitButton type='submit'>Add</SubmitButton>
+      </TextInput>
      </Form>
     );
   }
+
+  const fadeSlide = keyframes`
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0.4;
+      transform: translateX(16px);
+    }
+  `
+
+  const SubmitButton = styled.button`
+    background-color: hsl(39deg 100% 50%);
+    
+    &:hover {
+      background-color: hsl(0deg 0% 0%);
+      color: hsl(0deg 0% 100%);
+    }
+  `;
+
+  const TextInput = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  `;
 
   const Checkbox = styled.input`
     width: 1.25rem;
@@ -45,8 +87,20 @@ import styled from 'styled-components';
 
   const Label = styled.label`
     font-size: 1.25rem;
-    font-weight: 300;
+    font-weight: 450;
+    cursor: pointer;
+    color: ${({ done }) => (done
+       ? "hsl(0deg 0% 55%)" 
+       : "hsl(0deg 0% 0%)")};
+    text-decoration: ${({ done }) => (done
+       ? "line-through" 
+       : "none")};
+    animation: ${({ done }) => (done
+       ? fadeSlide
+       : "none"
+    )} 0.4s ease forwards;
   `;
+
  
  const Legend = styled.legend`
     font-size: 1.5rem;
@@ -75,7 +129,7 @@ import styled from 'styled-components';
     height: 500px;
     width: 500px;
     background: hsl(0deg 0% 100%);;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* box-shadow: 5px 5px 15px 0px hsl(0deg 0% 83%), -5px -5px 15px 0px hsl(0deg 0% 83%); */
