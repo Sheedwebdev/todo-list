@@ -72,7 +72,7 @@ import styled, { keyframes } from 'styled-components';
   `
 
   const AddButton = styled.button`
-    background-color: hsl(39deg 100% 50%);
+    background-color: hsl(195deg 75% 60%);
     
     &:hover {
       background-color: hsl(0deg 0% 0%);
@@ -143,7 +143,7 @@ import styled, { keyframes } from 'styled-components';
   const Form = styled.form`
     display: flex;
     gap: 15px;
-    height: 500px;
+    height: 400px;
     width: 500px;
     background: hsl(0deg 0% 100%);;
     flex-direction: column;

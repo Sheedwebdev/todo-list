@@ -17,7 +17,7 @@ import styled from 'styled-components';
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background-color: hsl(39deg 100% 50%);
+    background-color: hsl(195deg 75% 60%);
   `;
 
 export default App;
