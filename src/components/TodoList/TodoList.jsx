@@ -13,6 +13,11 @@ import styled, { keyframes } from 'styled-components';
       setNewTask("");
     }
 
+    const removeTask = function(indexToRemove) {
+      const updatedTasks = tasks.filter((_, index) => index !== indexToRemove);
+      setTasks(updatedTasks);
+    }
+
     return (
      <Form onSubmit={addTask}> 
       <Fieldset>
@@ -33,6 +38,9 @@ import styled, { keyframes } from 'styled-components';
             <Label htmlFor={`${id}-${index}`} done={task.done}>
               {task.text}
             </Label>
+            <RemoveButton type='button' onClick={() => {
+              removeTask(index);
+            }}>❌</RemoveButton>
           </Container>
         ))}
       </Fieldset>
@@ -46,7 +54,7 @@ import styled, { keyframes } from 'styled-components';
             setNewTask(e.target.value)
           )}
         />
-        <SubmitButton type='submit'>Add</SubmitButton>
+        <AddButton type='submit'>Add</AddButton>
       </TextInput>
      </Form>
     );
@@ -59,17 +67,26 @@ import styled, { keyframes } from 'styled-components';
     }
     to {
       opacity: 0.4;
-      transform: translateX(45px);
+      transform: translateX(25px);
     }
   `
 
-  const SubmitButton = styled.button`
+  const AddButton = styled.button`
     background-color: hsl(39deg 100% 50%);
     
     &:hover {
       background-color: hsl(0deg 0% 0%);
       color: hsl(0deg 0% 100%);
     }
+  `;
+
+  const RemoveButton = styled.button`
+  background-color: hsl(0deg 0% 100%);
+
+  &:hover {
+    background-color: hsl(0deg 0% 66%);
+    color: hsl(0deg 0% 100%);
+  }
   `;
 
   const TextInput = styled.div`
